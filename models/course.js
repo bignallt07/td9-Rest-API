@@ -1,6 +1,11 @@
 'use strict';
 const { Model } = require('sequelize');
 
+/**
+ * Course Model created through Sequelize CLI
+ * 
+ * Description: Creates a working model for the course data. This model will have various validations such as allowNull, notEmpty to stop missing data being submitted
+*/
 module.exports = (sequelize, DataTypes) => {
   class Course extends Model {
     /**
@@ -48,8 +53,12 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Course',
   });
 
-  // Not sure if this is set up correctly.
-  // Association 
+  /**
+   * Association
+   * 
+   * Description: This association users the belongsTo association meaning, that THIS course can have one user. This is identified by the foriegnKey which is shared with the user model
+   * @param {*} models 
+   */
   Course.associate = (models) => {
     Course.belongsTo(models.User, { foreignKey: "userId" });
   };

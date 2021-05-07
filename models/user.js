@@ -3,6 +3,12 @@ const { Model } = require('sequelize');
 
 const bcrypt = require("bcryptjs");
 
+/**
+ * User Model created through Sequelize CLI
+ * 
+ * Description: Creates a working model for the user data. This model will have various validations such as allowNull, notEmpty, Unique and isEmail
+ */
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -64,14 +70,14 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           msg: "Please provide a password name"
         }, 
+        /* Developer Note:
+        This following method sets the value of the password sent on the request to a hashed password
+        This is set to 10 salt rounds.
+        */
         set(val) {
           const hashedPassword = bcrypt.hashSync(val, 10);
           this.setDataValue('password', hashedPassword);
         }
-        // len: {                               // Fix this, it doesn't seem to be working
-        //   args: [10, 20],
-        //   msg: "The password should be between 10 and 20 characters long"
-        // }
       }
     } 
   }, {
@@ -79,7 +85,12 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'User',
   });
 
-  // Association
+  /**
+   * Association
+   * 
+   * Description: This association users the hasMany association meaning, that THIS user can have many courses. This is identified by the foriegnKey.
+   * @param {*} models 
+   */
   User.associate = (models) => {
     User.hasMany(models.Course, { foreignKey: "userId" }); 
   };

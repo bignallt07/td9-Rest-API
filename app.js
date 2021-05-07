@@ -4,10 +4,10 @@
 const express = require('express');
 const morgan = require('morgan');
 
-// Getting the routes
+// Requiring the routes from the routes file
 const routes = require('./routes');
 
-// Require Sequelize Instance from Model index.js
+// Require Sequelize database Instance from Model index.js
 const db = require("./models");
 
 
@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 
 // Allow Express to work with JSON
 app.use(express.json());
-// Add routes.
+// Add the api url with the routes file
 app.use('/api', routes);
 
 
@@ -52,9 +52,13 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Connect to the database
+/**
+ * Connect to the Database
+ * 
+ * Description: An async function that awaits sequelize authentication on the database. Returning a success/failure message
+ */
 (async () => {
-  // await db.sequelize.sync(); // Maybe add later
+  // await db.sequelize.sync(); // Add in later if I need to sync database - Didn't seem required from the sequelize documentation
   try {
     await db.sequelize.authenticate();
     console.log("CONNECTION TO THE DATABASE ESTABLISHED");
