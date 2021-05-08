@@ -88,6 +88,9 @@ router.get("/courses", asyncHandler( async (req, res) => {
             {
             model: User, 
             as: "User",
+            attributes: {
+                exclude: ['password', 'createdAt', 'updatedAt']
+                }
             }
         ],
         attributes: {
@@ -110,6 +113,9 @@ router.get("/courses/:id", asyncHandler( async (req, res) => {
             {
             model: User, 
             as: "User",
+            attributes: {
+                exclude: ['password', 'createdAt', 'updatedAt']
+                }
             }
         ],
         attributes: {
@@ -133,7 +139,7 @@ router.post("/courses", authenticateUser, asyncHandler( async (req, res) => {
         try {
             const course = await Course.create(req.body);
             const courseId = course.id;
-            res.location(`/${courseId}`); 
+            res.location(`courses/${courseId}`); 
             res.status(201).end();
         } catch (error) {
             console.log("Error: ", error.name);
