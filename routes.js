@@ -139,7 +139,7 @@ router.post("/courses", authenticateUser, asyncHandler( async (req, res) => {
         try {
             const course = await Course.create(req.body);
             const courseId = course.id;
-            res.location(`courses/${courseId}`); 
+            res.location(`/courses/${courseId}`); 
             res.status(201).end();
         } catch (error) {
             console.log("Error: ", error.name);
